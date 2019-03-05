@@ -1,17 +1,16 @@
 const mongoose = require('mongoose')
+const passportLocalMongoose = require('passport-local-mongoose');
+const Schema = mongoose.Schema
 
-let UserSchema = mongoose.Schema({
-	username: {
-		type: String,
-		required: true
-	},
-	password: {
-		type: String,
-		required: true
-	}
-}, {
-	collection: "auth_app"
+const UserSchema = new Schema(
+{
+	username: String,
+	password: String
+}, 
+{ 
+	collection: "auth_app" 
 })
 
-let user = mongoose.model('user', UserSchema)
-module.exports=user
+UserSchema.plugin(passportLocalMongoose)
+
+module.exports = mongoose.model('user', UserSchema)
